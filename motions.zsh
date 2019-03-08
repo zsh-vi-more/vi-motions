@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 fpath+="${0:h}"
 
-# More text objects
+# More text objects from zsh/functions/Zle
 autoload -Uz select-quoted select-bracketed
 zle -N select-quoted
 zle -N select-bracketed
