@@ -14,3 +14,12 @@ for m in vicmd viopp; do
 	done
 done
 
+# Load Vi-surround from zsh/functions/Zle
+autoload -Uz surround
+zle -N delete-surround surround
+zle -N add-surround surround
+zle -N change-surround surround
+bindkey -a cs change-surround
+bindkey -a ds delete-surround
+bindkey -a ys add-surround
+bindkey -M visual S add-surround
