@@ -1,0 +1,34 @@
+#!/usr/bin/env zsh
+
+zle -f vichange
+setopt localoptions noksharrays extendedglob
+
+local -i posword offset
+
+# from split-shell-arguments
+local -a reply
+local REPLY REPLY2
+
+autoload -Uz split-shell-arguments
+split-shell-arguments
+
+case $1 in # b* for backward
+	b*)
+		(( offset = -2 ))
+		# if at start of word, move backwards
+		(( REPLY2 < 2 )) && (( REPLY-- ))
+		;;
+	*)
+		(( offset = 2 ))
+		;;
+esac
+
+# even elements are shell arguments
+(( posword = REPLY - REPLY & 1 + offset * ${NUMERIC:- 1} ))
+(( posword < 1 )) && (( posword = 1 ))
+
+# Length of all characters before current.
+# Force use of character (not index) counting and join without IFS.
+integer wordoff="${(cj..)#reply[1,posword-1]}"
+
+(( CURSOR = wordoff ))
