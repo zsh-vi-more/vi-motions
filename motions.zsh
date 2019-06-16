@@ -23,3 +23,15 @@ bindkey -a cs change-surround
 bindkey -a ds delete-surround
 bindkey -a ys add-surround
 bindkey -M visual S add-surround
+
+# Add forward/backward-shell-word
+autoload -Uz vi-forward-shell-word
+vi-backward-shell-word(){ vi-forward-shell-word b }
+zle -N vi-forward-shell-word
+zle -N vi-backward-shell-word
+# Add the following to your zshrc to overwrite the normal
+# forward-black-word and backward-blank-word bindings
+#for m in vicmd visual; do
+#	bindkey -M "$m" 'W' vi-forward-shell-word
+#	bindkey -M "$m" 'B' vi-backward-shell-word
+#done
