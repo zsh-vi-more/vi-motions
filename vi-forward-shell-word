@@ -17,7 +17,7 @@ case $1 in
 	b*) # backward
 		(( offset = -2 ))
 		# if at start of word, move backward
-		(( ! is_end && REPLY2 < 2 )) && (( REPLY-- ))
+		(( REPLY = is_end || REPLY2 < 2 ? REPLY + 1 : REPLY + 2 ))
 		;;
 	*)
 		(( offset = 2 ))
@@ -34,4 +34,4 @@ esac
 # Force use of character (not index) counting and join without IFS.
 integer wordoff="${(cj..)#reply[1,posword-1]}"
 
-(( CURSOR = wordoff + is_end * ${#reply[posword]} ))
+(( CURSOR = wordoff + is_end * (${#reply[posword]} - 1) ))
