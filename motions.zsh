@@ -27,11 +27,16 @@ bindkey -M visual S add-surround
 # Add forward/backward-shell-word
 autoload -Uz vi-forward-shell-word
 vi-backward-shell-word(){ vi-forward-shell-word b }
+vi-forward-shell-word-end(){ vi-forward-shell-word '' e }
+vi-backward-shell-word-end(){ vi-forward-shell-word b e }
 zle -N vi-forward-shell-word
 zle -N vi-backward-shell-word
-# Add the following to your zshrc to overwrite the normal
-# forward-black-word and backward-blank-word bindings
+zle -N vi-forward-shell-word-end
+zle -N vi-backward-shell-word-end
+# Add the following to your zshrc to overwrite the normal bindings:
 #for m in vicmd visual; do
-#	bindkey -M "$m" 'W' vi-forward-shell-word
-#	bindkey -M "$m" 'B' vi-backward-shell-word
+#	bindkey -M "$m" 'W'  vi-forward-shell-word
+#	bindkey -M "$m" 'B'  vi-backward-shell-word
+#	bindkey -M "$m" 'E'  vi-forward-shell-word-end
+#	bindkey -M "$m" 'gE' vi-backward-shell-word-end
 #done
