@@ -3,7 +3,7 @@
 zle -f vichange
 setopt localoptions noksharrays extendedglob
 
-local -i posword offset
+local -i posword offset is_end=0
 
 # from split-shell-arguments
 local -a reply
@@ -12,14 +12,17 @@ local REPLY REPLY2
 autoload -Uz split-shell-arguments
 split-shell-arguments
 
-case $1 in # b* for backward
-	b*)
+[[ $2 = e* ]] && is_end=1
+case $1 in
+	b*) # backward
 		(( offset = -2 ))
-		# if at start of word, move backwards
-		(( REPLY2 < 2 )) && (( REPLY-- ))
+		# if at start of word, move backward
+		(( ! is_end && REPLY2 < 2 )) && (( REPLY-- ))
 		;;
 	*)
 		(( offset = 2 ))
+		# if an end movement but not at end, move backward
+		(( is_end && $REPLY2 < ${#reply[1,REPLY]} )) && (( REPLY-- ))
 		;;
 esac
 
@@ -31,4 +34,4 @@ esac
 # Force use of character (not index) counting and join without IFS.
 integer wordoff="${(cj..)#reply[1,posword-1]}"
 
-(( CURSOR = wordoff ))
+(( CURSOR = wordoff + is_end * ${#reply[posword]} ))
