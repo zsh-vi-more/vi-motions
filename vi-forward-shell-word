@@ -1,11 +1,18 @@
 #!/usr/bin/env zsh
+# Implements forward/backward shell-word motions and shell-word-end motions
+# Also see functions/Zle/modify-current-argument,
+# some ideas were lifted from there.
+
+# Arguments:
+# $1: If matches b*, consider this a backward motion
+# $2: If matches e*, consider this an end motion
 
 zle -f vichange
 setopt localoptions noksharrays extendedglob
 
 local -i posword offset is_end=0
 
-# from split-shell-arguments
+# variables from split-shell-arguments
 local -a reply
 local REPLY REPLY2
 
