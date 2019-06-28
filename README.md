@@ -7,7 +7,7 @@ Add more Vi Motions
 
 _Distributed with Zsh, enabled here:_
 
-- Select quoted strings/tokens (`'`, `"`, or `\``) as text objects
+- Select quoted strings/tokens (`'`, `"`, or `` ` ``) as text objects
 with `a` or `i` commands.
 - Select bracketed strings/tokens (`( )`, `{ }`, `[ ]`, or `< >`) as text objects
 with `a` or `i` commands.
