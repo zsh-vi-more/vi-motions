@@ -24,15 +24,16 @@ rather than blank words.
 *Select in/a command*
 
 - surrounding backticks or `$( )`
-- backwards to unescaped `;`, `{`, newline, `if`, `elif`, `else`, `do`,
+- backwards to unescaped `;`, `{`, `(`, newline, or start of buffer (call this `[;]`)
+- or backwards to `[;]if`, `[;]elif`, `[;]else`, `[;]do`,
 - forward to unescaped `;` or `}`
 
 *Select in/a command list*
 
-- Between `;while`/`;until`/`;repeat` and `;do`/`{`
-- Between `;select` and `;do`/`{`
-- Between `;case` and `;esac`
-- Between `;do` and `;done`
-- Between `;if`/`;elif` and `;then`
-- Between `;then` and `;elif`/`;fi`
-- Between `{` and `}`
+- Between `[;]while`/`[;]until`/`[;]repeat` and `[;]do`/`{`/`(`
+- Between `[;]select` and `[;]do`/`{`/`(`
+- Between `[;]case` and `[;]esac`
+- Between `[;]do` and `[;]done`
+- Between `[;]if`/`[;]elif` and `[;]then`
+- Between `[;]then` and `[;]elif`/`[;]fi`
+- Between `[;]{` and `}` or `[;](` and `)`
