@@ -1,5 +1,13 @@
 #!/usr/bin/env zsh
-fpath+="${0:h}"
+# {{{ Handle fpath/$0
+# ref: zdharma.org/Zsh-100-Commits-Club/Zsh-Plugin-Standard.html#zero-handling
+0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
+0="${${(M)0:#/*}:-$PWD/$0}"
+if [[ $zsh_loaded_plugins[-1] != */vi-mostions && -z $fpath[(r)${0:h}] ]]
+then
+    fpath+=( "${0:h}" )
+fi
+# }}}
 
 # More text objects from zsh/functions/Zle
 autoload -Uz select-quoted select-bracketed
