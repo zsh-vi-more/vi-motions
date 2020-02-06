@@ -5,9 +5,10 @@
 0="${${(M)0:#/*}:-$PWD/$0}"
 fpath+=( "${0:h}/functions" )
 autoload -Uz select-quoted select-bracketed split-shell-arguments surround \
-	vi-forward-shell-word select-command
+	vi-forward-shell-word select-a-command
 # }}}
 
+local m seq
 # More text objects from zsh/functions/Zle
 zle -N select-quoted
 zle -N select-bracketed

@@ -27,7 +27,7 @@ repeat $fcount; do
 	((end < $#reply)) || break
 done
 
-if [[ $KEYS = i* ]]; then
+if [[ $WIDGET = select-in* ]]; then
 	# move to exclude space after ";"
 	((start += 1))
 	# move to exclude space after "if"
