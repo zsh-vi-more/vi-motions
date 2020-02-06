@@ -42,8 +42,8 @@ done
 zle -N select-a-command
 zle -N select-in-command select-a-command
 for m in vicmd viopp; do
-	bindkey -M "$m" 'ac' select-a-command 'aC' select-a-command \
-		'ic' select-in-command 'iC' select-in-command
+	bindkey -M "$m" 'as' select-a-command 'aS' select-a-command \
+		'is' select-in-command 'iS' select-in-command
 done
 
 # Add forward/backward-shell-word
