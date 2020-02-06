@@ -3,10 +3,7 @@
 # ref: zdharma.org/Zsh-100-Commits-Club/Zsh-Plugin-Standard.html#zero-handling
 0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 0="${${(M)0:#/*}:-$PWD/$0}"
-if [[ $zsh_loaded_plugins[-1] != */vi-motions && -z $fpath[(r)${0:h}] ]]
-then
-    fpath+=( "${0:h}/functions" )
-fi
+fpath+=( "${0:h}/functions" )
 autoload -Uz select-quoted select-bracketed split-shell-arguments surround \
 	vi-forward-shell-word select-command
 # }}}
