@@ -1,0 +1,36 @@
+
+#!/usr/bin/env zsh
+emulate -L zsh
+setopt extendedglob
+zle -f vichange
+
+local cmd_delim=$'(\n##''|\||\|\||&&|;|;;|;&)'
+
+local -a reply
+local -i REPLY{,2}
+split-shell-arguments
+
+if [[ $WIDGET = vi-b* ]]; then
+	local -i start=$REPLY
+	repeat ${NUMERIC:-1}; do
+		start="${${(@)reply[0,start-1]}[(I)$~cmd_delim]}"
+		((start)) || break
+	done
+	if [[ $WIDGET = *-end ]]; then
+		# move to exclude space after ";"
+		((start += 1))
+	fi
+	CURSOR="${(cj..)#reply[1,start]}"
+else
+	local -i end=$REPLY
+	repeat ${NUMERIC:-1}; do
+		end+="${${(@)reply[end+1,-1]}[(i)$~cmd_delim]}"
+		((end < $#reply)) || break
+	done
+	if [[ $WIDGET = *-end ]]; then
+		# move to include space before ";", exclude ";"
+		[[ $reply[end] = $~cmd_delim ]] && ((end -= 1 ))
+	fi
+	CURSOR="${(cj..)#reply[1,end]}"
+fi
+
