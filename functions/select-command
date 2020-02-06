@@ -1,0 +1,45 @@
+#!/usr/bin/env zsh
+emulate -L zsh
+setopt extendedglob
+zle -f vichange
+
+local cmd_delim=$'(\n##''|\||\|\||&&|;|;;|;&)'
+
+local -a reply
+local -i REPLY{,2}
+split-shell-arguments
+local -i start=$REPLY end=$REPLY {b,f}count=1 back
+
+if [[ $KEYS = *[[:upper:]] ]]; then
+	bcount=${NUMERIC:-1}
+	back=1
+else
+	fcount=${NUMERIC:-1}
+	back=0
+fi
+
+#print $REPLY \<$^reply\>
+# backwards
+repeat $bcount; do
+	start="${${(@)reply[0,start-1]}[(I)$~cmd_delim]}"
+	((start)) || break
+done
+repeat $fcount; do
+	end+="${${(@)reply[end+1,-1]}[(i)$~cmd_delim]}"
+	((end < $#reply)) || break
+done
+
+if [[ $KEYS = i* ]]; then
+	# move to exclude space after ";"
+	((start += 1))
+	# move to exclude space after "if"
+	[[ $reply[start+1] = (if|elif|then|else|while|do|until|\{|\() ]] && ((start += 2))
+	# move to include space before ";", exclude ";"
+	[[ $reply[end] = $~cmd_delim ]] && ((end -= 1 ))
+else
+	# move to include space after ";"
+	((end += 1))
+fi
+CURSOR="${(cj..)#reply[1,start]}"
+MARK="${(cj..)#reply[1,end]}"
+
