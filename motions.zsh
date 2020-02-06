@@ -3,14 +3,15 @@
 # ref: zdharma.org/Zsh-100-Commits-Club/Zsh-Plugin-Standard.html#zero-handling
 0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 0="${${(M)0:#/*}:-$PWD/$0}"
-if [[ $zsh_loaded_plugins[-1] != */vi-mostions && -z $fpath[(r)${0:h}] ]]
+if [[ $zsh_loaded_plugins[-1] != */vi-motions && -z $fpath[(r)${0:h}] ]]
 then
-    fpath+=( "${0:h}" )
+    fpath+=( "${0:h}/functions" )
 fi
+autoload -Uz select-quoted select-bracketed split-shell-arguments surround \
+	vi-forward-shell-word select-command
 # }}}
 
 # More text objects from zsh/functions/Zle
-autoload -Uz select-quoted select-bracketed
 zle -N select-quoted
 zle -N select-bracketed
 for m in vicmd viopp; do
@@ -23,7 +24,6 @@ for m in vicmd viopp; do
 done
 
 # Load Vi-surround from zsh/functions/Zle
-autoload -Uz surround
 zle -N delete-surround surround
 zle -N add-surround surround
 zle -N change-surround surround
@@ -33,7 +33,6 @@ bindkey -a ys add-surround
 bindkey -M visual S add-surround
 
 # Add forward/backward-shell-word
-autoload -Uz vi-forward-shell-word
 vi-backward-shell-word(){ vi-forward-shell-word b }
 vi-forward-shell-word-end(){ vi-forward-shell-word '' e }
 vi-backward-shell-word-end(){ vi-forward-shell-word b e }
