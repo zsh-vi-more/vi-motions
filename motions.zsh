@@ -33,13 +33,10 @@ bindkey -a ys add-surround
 bindkey -M visual S add-surround
 
 # Add forward/backward-shell-word
-vi-backward-shell-word(){ vi-forward-shell-word b }
-vi-forward-shell-word-end(){ vi-forward-shell-word '' e }
-vi-backward-shell-word-end(){ vi-forward-shell-word b e }
 zle -N vi-forward-shell-word
-zle -N vi-backward-shell-word
-zle -N vi-forward-shell-word-end
-zle -N vi-backward-shell-word-end
+zle -N vi-backward-shell-word     vi-forward-shell-word
+zle -N vi-forward-shell-word-end  vi-forward-shell-word
+zle -N vi-backward-shell-word-end vi-forward-shell-word
 
 ## Add the following to your zshrc to overwrite the normal
 ## (forward|backward)-blank-word bindings:
