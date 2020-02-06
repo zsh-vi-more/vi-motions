@@ -25,7 +25,7 @@ done
 zle -N delete-surround surround
 zle -N add-surround surround
 zle -N change-surround surround
-bindkey cs change-surround ds delete-surround ys add-surround
+bindkey -M vicmd cs change-surround ds delete-surround ys add-surround
 bindkey -M visual S add-surround
 
 # Add forward/backward-command
