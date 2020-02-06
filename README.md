@@ -5,31 +5,24 @@ Add more Vi Motions
 ## Motions added:
 
 
-_Distributed with Zsh, enabled here:_
+| New\* | Map | Keybinding | Motion |
+| --- | --- | --- | --- |
+| No | `vicmd` `viopp` | `a'` `a"` ```a` ``` | select a quoted string or backticks |
+| No | `vicmd` `viopp` | `i'` `i"` ```i` ``` | select in a quoted string or backticks |
+| No | `vicmd` `viopp` | `a(` `a[` `a{` `a<` `ab` `a)` `a]` `a}` `a>` `aB` | select a bracketed segment |
+| No | `vicmd` `viopp` | `i(` `i[` `i{` `i<` `ib` `i)` `i]` `i}` `i>` `iB` | select in a bracketed segment |
+| No | `vicmd` | `cs` `ds` `ys` | change/delete/yank surrounding quotes/brackets |
+| Yes | `vicmd` `viopp` `visual` | `)` `(` `g)` `g(` | move forward/back to start/end of command |
+| Yes | `vicmd` `viopp` | `ac` `aC` | select a command |
+| Yes | `vicmd` `viopp` | `ic` `iC` | select in a command (exclude terminating `;` and control flow words) |
+| Yes | `vicmd` `viopp` `visual` | _(Not enabled by default)_ | Move forward/back to start/end of shell words |
 
-- Select quoted strings/tokens (`'`, `"`, or `` ` ``) as text objects
-with `a` or `i` commands.
-- Select bracketed strings/tokens (`( )`, `{ }`, `[ ]`, or `< >`) as text objects
-with `a` or `i` commands.
-- Change/delete surrounding quotes/brackets as in vim-surround.
-
-_Distributed with this plugin, not enabled:_
-
-- Change `W`, `B`, `E`, and `gE` motions to work on shell words
-rather than blank words.
-(See the end of `motions.zsh` for how to enable this.)
+_(\*"New": Plugins marked as "not new" are distributed with Zsh and are simply loaded by this plugin.
+Plugins marked as "new" are written and maintained in this repo.)_
 
 ## Future additions(?):
 
-*Select in/a command*
-
-- surrounding backticks or `$( )`
-- backwards to unescaped `;`, `{`, `(`, newline, or edge of buffer (call this `[;]`)
-- or backwards to `[;]if`, `[;]elif`, `[;]else`, `[;]do`, `[;]while`, `[;]until`, `[;]repeat`, `[;]case`, `[;]then`
-- forward to `[;]` or unescaped `}[;]`
-- between `((` and `))`
-
-*Select in/a command list*
+*Select in/a command list* (Note, `[;]` is any kind of command terminator)
 
 - Between `[;]while`/`[;]until`/`[;]repeat` and `[;]do`/`{`/`(`
 - Between `[;]select` and `[;]do`/`{`/`(`
