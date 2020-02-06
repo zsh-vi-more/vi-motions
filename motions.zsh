@@ -35,7 +35,7 @@ zle -N vi-forward-command-end  vi-forward-command
 zle -N vi-backward-command-end vi-forward-command
 for m in vicmd viopp visual; do
 	bindkey -M "$m" ')' vi-forward-command '(' vi-backward-command \
-		"$m" 'g)' vi-forward-command-end 'g(' vi-backward-command-end
+		'g)' vi-forward-command-end 'g(' vi-backward-command-end
 done
 
 # Add select-(in|a)-command
