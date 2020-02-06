@@ -18,19 +18,16 @@ local REPLY REPLY2
 
 split-shell-arguments
 
-[[ $2 = e* ]] && is_end=1
-case $1 in
-	b*) # backward
-		(( offset = -2 ))
-		# if at start of word, move backward
-		(( REPLY = is_end || REPLY2 < 2 ? REPLY + 1 : REPLY + 2 ))
-		;;
-	*)
-		(( offset = 2 ))
-		# if an end movement but not at end, move backward
-		(( is_end && $REPLY2 < ${#reply[1,REPLY]} )) && (( REPLY-- ))
-		;;
-esac
+[[ $WIDGET = *-end ]] && is_end=1
+if [[ $WIDGET = vi-b* ]]; then
+	(( offset = -2 ))
+	# if at start of word, move backward
+	(( REPLY = is_end || REPLY2 < 2 ? REPLY + 1 : REPLY + 2 ))
+else
+	(( offset = 2 ))
+	# if an end movement but not at end, move backward
+	(( is_end && $REPLY2 < ${#reply[1,REPLY]} )) && (( REPLY-- ))
+fi
 
 # even elements are shell arguments
 (( posword = REPLY - REPLY & 1 + offset * ${NUMERIC:- 1} ))
