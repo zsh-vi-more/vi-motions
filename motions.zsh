@@ -5,7 +5,7 @@
 0="${${(M)0:#/*}:-$PWD/$0}"
 fpath+=( "${0:h}/functions" )
 autoload -Uz select-quoted select-bracketed split-shell-arguments surround \
-	vi-forward-shell-word select-a-command
+	vi-forward-shell-word vi-forward-command select-a-command
 # }}}
 
 local m seq
