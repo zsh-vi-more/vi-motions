@@ -12,10 +12,8 @@ local -i start=$REPLY end=$REPLY {b,f}count=1 back
 
 if [[ $KEYS = *[[:upper:]] ]]; then
 	bcount=${NUMERIC:-1}
-	back=1
 else
 	fcount=${NUMERIC:-1}
-	back=0
 fi
 
 #print $REPLY \<$^reply\>
