@@ -16,8 +16,8 @@ for m in vicmd viopp; do
 	for seq in {a,i}{\',\",\`}; do
 		bindkey -M "$m" "$seq" select-quoted
 	done
-	for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
-		bindkey -M $m $c select-bracketed
+	for seq in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+		bindkey -M "$m" "$seq" select-bracketed
 	done
 done
 
@@ -25,10 +25,26 @@ done
 zle -N delete-surround surround
 zle -N add-surround surround
 zle -N change-surround surround
-bindkey -a cs change-surround
-bindkey -a ds delete-surround
-bindkey -a ys add-surround
+bindkey cs change-surround ds delete-surround ys add-surround
 bindkey -M visual S add-surround
+
+# Add forward/backward-command
+zle -N vi-forward-command
+zle -N vi-backward-command     vi-forward-command
+zle -N vi-forward-command-end  vi-forward-command
+zle -N vi-backward-command-end vi-forward-command
+for m in vicmd viopp visual; do
+	bindkey -M "$m" ')' vi-forward-command '(' vi-backward-command \
+		"$m" 'g)' vi-forward-command-end 'g(' vi-backward-command-end
+done
+
+# Add select-(in|a)-command
+zle -N select-a-command
+zle -N select-in-command select-a-command
+for m in vicmd viopp; do
+	bindkey -M "$m" 'ac' select-a-command 'aC' select-a-command \
+		'ic' select-in-command 'iC' select-in-command
+done
 
 # Add forward/backward-shell-word
 zle -N vi-forward-shell-word
