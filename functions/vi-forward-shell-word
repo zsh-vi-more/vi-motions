@@ -6,9 +6,9 @@
 # Arguments:
 # $1: If matches b*, consider this a backward motion
 # $2: If matches e*, consider this an end motion
-
+emulate -L zsh
+setopt extendedglob
 zle -f vichange
-setopt localoptions noksharrays extendedglob
 
 local -i posword offset is_end=0
 
@@ -16,7 +16,6 @@ local -i posword offset is_end=0
 local -a reply
 local REPLY REPLY2
 
-autoload -Uz split-shell-arguments
 split-shell-arguments
 
 [[ $2 = e* ]] && is_end=1
