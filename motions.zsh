@@ -9,6 +9,13 @@ autoload -Uz select-quoted select-bracketed split-shell-arguments surround \
 # }}}
 
 local m seq
+
+# Bind Home/End
+bindkey -M vicmd '^[[H' vi-beginning-of-line
+bindkey -M viins '^[[H' beginning-of-line
+bindkey -M vicmd '^[[F' vi-end-of-line
+bindkey -M viins '^[[F' end-of-line
+
 # More text objects from zsh/functions/Zle
 zle -N select-quoted
 zle -N select-bracketed
