@@ -5,7 +5,8 @@
 0="${${(M)0:#/*}:-$PWD/$0}"
 fpath+=( "${0:h}/functions" )
 autoload -Uz select-quoted select-bracketed split-shell-arguments surround \
-	vi-forward-shell-word vi-forward-command select-a-command
+	vi-forward-shell-word vi-forward-command select-a-command \
+	vi-forced-motion
 # }}}
 
 local m seq
@@ -15,6 +16,10 @@ bindkey -M vicmd '^[[H' vi-beginning-of-line
 bindkey -M viins '^[[H' beginning-of-line
 bindkey -M vicmd '^[[F' vi-end-of-line
 bindkey -M viins '^[[F' end-of-line
+
+# Forced motion
+zle -N vi-forced-motion
+bindkey -M viopp v vi-forced-motion
 
 # More text objects from zsh/functions/Zle
 zle -N select-quoted

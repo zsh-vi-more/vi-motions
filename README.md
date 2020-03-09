@@ -13,6 +13,7 @@ Add more Vi Motions
 | No | `vicmd` `viopp` | `i(` `i[` `i{` `i<` `ib` `i)` `i]` `i}` `i>` `iB` | select in a bracketed segment |
 | No | `vicmd` | `cs` `ds` `ys` | change/delete/add surrounding quotes/brackets |
 | No | `visual` | `S` | add surrounding quotes/brackets |
+| Yes | `viopp` | `v`[motion] | Force motion character-wise, or toggle exclusivity (see `:h forced-motion` in Vim) |
 | Yes | `vicmd` `viopp` `visual` | `)` `(` `g)` `g(` | move forward/back to start/end of command |
 | Yes | `vicmd` `viopp` | `as` `aS` | select a command |
 | Yes | `vicmd` `viopp` | `is` `iS` | select in a command (exclude terminating `;` and control flow words) |
