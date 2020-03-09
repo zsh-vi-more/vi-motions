@@ -1,0 +1,67 @@
+#!/usr/bin/env zsh
+emulate -L zsh
+setopt extendedglob
+
+local cmd_delim=$'\n##''|\||\|\||&&|;|;;|;&'
+local list_head='if|elif|else|for|while|until|repeat|case|select|time'
+local list_body='then|else|do|always|[({])'
+local list_end='elif|else|fi|done|esac|[}]'
+
+local -a reply
+local -i REPLY{,2}
+split-shell-arguments
+
+if [[ $WIDGET = vi-b* ]]; then
+	local -i start=$REPLY nest=0
+	repeat ${NUMERIC:-1}; do
+		while :; do
+			start="${${(@)reply[0,start-1]}[(I)($~cmd_delim)]}"
+			((start)) || break 2
+			# look next command:
+			case $reply[start+2] in
+			$~list_head) # if ...
+				if ! ((nest)); then
+					((start += 2))
+					break
+				fi ;;
+			$~list_body) # then ...
+				if ! ((nest--)); then
+					((start += 2))
+					break
+				fi ;;
+			$~list_end) # fi
+				((nest++)) ;;
+			esac
+		done
+	done
+	if [[ $WIDGET = *-end ]]; then
+		# move to exclude space after ";"
+		((start += 1))
+	fi
+	CURSOR="${(cj..)#reply[1,start]}"
+else
+	local -i end=$REPLY nest=0
+	repeat ${NUMERIC:-1}; do
+		while :; do
+			end+="${${(@)reply[end+1,-1]}[(i)($~cmd_delim)]}"
+			((end < $#reply)) || break 2
+			# look next command:
+			case $reply[start+2] in
+			$~list_body) # then ...
+				((nest++)) ;;
+			$~list_end) # fi
+				if ((nest--)); then
+					((start -= 2))
+					break
+				fi ;;
+			esac
+
+		done
+	done
+	if [[ $WIDGET = *-end ]]; then
+		# move to include space before ";", exclude ";"
+		[[ $reply[end] = $~cmd_delim ]] && ((end -= 1 ))
+	fi
+	CURSOR="${(cj..)#reply[1,end]}"
+fi
+
