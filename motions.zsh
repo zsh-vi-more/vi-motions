@@ -52,17 +52,21 @@ zle -N vi-backward-shell-word     vi-forward-shell-word
 zle -N vi-forward-shell-word-end  vi-forward-shell-word
 zle -N vi-backward-shell-word-end vi-forward-shell-word
 
-## Add the following to your zshrc to overwrite the normal
-## (forward|backward)-blank-word bindings:
-#for m in vicmd visual; do
-#	bindkey -M "$m" 'W'  vi-forward-shell-word
-#	bindkey -M "$m" 'B'  vi-backward-shell-word
-#	bindkey -M "$m" 'E'  vi-forward-shell-word-end
-#	bindkey -M "$m" 'gE' vi-backward-shell-word-end
-#done
-## You may also want to swap select-(in|a)-shell-word bindings
-## with select-(in|a)-blank-word bindings
-#bindkey -M viopp aW select-a-shell-word
-#bindkey -M viopp iW select-in-shell-word
-#bindkey -M viopp aa select-a-blank-word
-#bindkey -M viopp ia select-in-blank-word
+return
+
+# ===================================================================
+
+# Add the following to your zshrc to overwrite the normal
+# (forward|backward)-blank-word bindings:
+for m in vicmd visual; do
+	bindkey -M "$m" 'W'  vi-forward-shell-word
+	bindkey -M "$m" 'B'  vi-backward-shell-word
+	bindkey -M "$m" 'E'  vi-forward-shell-word-end
+	bindkey -M "$m" 'gE' vi-backward-shell-word-end
+done
+# You may also want to swap select-(in|a)-shell-word bindings
+# with select-(in|a)-blank-word bindings
+bindkey -M viopp aW select-a-shell-word
+bindkey -M viopp iW select-in-shell-word
+bindkey -M viopp aa select-a-blank-word
+bindkey -M viopp ia select-in-blank-word
