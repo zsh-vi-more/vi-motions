@@ -1,8 +1,6 @@
-
 #!/usr/bin/env zsh
 emulate -L zsh
 setopt extendedglob
-zle -f vichange
 
 local cmd_delim=$'(\n##''|\||\|\||&&|;|;;|;&)'
 
