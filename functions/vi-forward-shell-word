@@ -8,7 +8,6 @@
 # $2: If matches e*, consider this an end motion
 emulate -L zsh
 setopt extendedglob
-zle -f vichange
 
 local -i posword offset is_end=0
 
