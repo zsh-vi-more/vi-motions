@@ -9,10 +9,10 @@ local -i REPLY{,2}
 split-shell-arguments
 
 if [[ $WIDGET = vi-b* ]]; then
-	local -i start=$REPLY
+	local -i start=$((REPLY ? REPLY - 1 : 0))
 	repeat ${NUMERIC:-1}; do
-		start="${${(@)reply[0,start-1]}[(I)$~cmd_delim]}"
 		((start)) || break
+		start="${${(@)reply[0,start-1]}[(I)$~cmd_delim]}"
 	done
 	if [[ $WIDGET = *-end ]]; then
 		# move to exclude space after ";"
