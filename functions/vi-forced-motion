@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+
+emulate -L zsh
+
+local REPLY
+local -i old_cursor=$CURSOR
+
+zle read-command
+
+case $REPLY in
+	# make motion inclusive
+	(.|)vi-forward-char)
+		zle $REPLY
+		((CURSOR += 1)) ;;
+	(.|)vi-(back|first|begin|find-p)*)
+		zle $REPLY
+		((MARK = CURSOR, CURSOR = old_cursor + 1)) ;;
+	# make motion exlcusive
+	(.|)vi-(forw|end|find-n)*)
+		zle $REPLY
+		((CURSOR -= 1)) ;;
+	undefined-key) return 1 ;;
+	# in viopp, this forces character-wise motion
+	*) zle visual-mode; zle $REPLY ;;
+esac
