@@ -5,7 +5,7 @@
 0="${${(M)0:#/*}:-$PWD/$0}"
 fpath+=( "${0:h}/functions" )
 autoload -Uz select-quoted select-bracketed split-shell-arguments surround \
-	vi-forward-shell-word vi-forward-command select-a-command \
+	vi-forward-wordchars vi-forward-shell-word vi-forward-command select-a-command \
 	vi-forced-motion
 # }}}
 
@@ -40,11 +40,15 @@ zle -N change-surround surround
 bindkey -M vicmd cs change-surround ds delete-surround ys add-surround
 bindkey -M visual S add-surround
 
-# Add forward/backward-command
-zle -N vi-forward-command
-zle -N vi-backward-command     vi-forward-command
-zle -N vi-forward-command-end  vi-forward-command
-zle -N vi-backward-command-end vi-forward-command
+# Add forward/backwards widgets
+for m in command shell-word wordchars; do
+	zle -N vi-forward-$m
+	zle -N vi-backward-$m     vi-forward-$m
+	zle -N vi-forward-$m-end  vi-forward-$m
+	zle -N vi-backward-$m-end vi-forward-$m
+done
+
+# Forwards-backwards for commands
 for m in vicmd viopp visual; do
 	bindkey -M "$m" ')' vi-forward-command '(' vi-backward-command \
 		'g)' vi-forward-command-end 'g(' vi-backward-command-end
@@ -57,12 +61,6 @@ for m in vicmd viopp; do
 	bindkey -M "$m" 'as' select-a-command 'aS' select-a-command \
 		'is' select-in-command 'iS' select-in-command
 done
-
-# Add forward/backward-shell-word
-zle -N vi-forward-shell-word
-zle -N vi-backward-shell-word     vi-forward-shell-word
-zle -N vi-forward-shell-word-end  vi-forward-shell-word
-zle -N vi-backward-shell-word-end vi-forward-shell-word
 
 ## Add the following to your zshrc to overwrite the normal
 ## (forward|backward)-blank-word bindings:

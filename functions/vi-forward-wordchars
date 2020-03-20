@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+emulate -L zsh
+setopt extendedglob
+local -i i
+if [[ $WIDGET = vi-b* ]]; then
+	if [[ $WIDGET = *end ]]; then
+		((i = ${${LBUFFER[1,-2]}[(I)[[:WORD:]][^[:WORD:]]]} - 1))
+	else
+		((i = ${${LBUFFER[1,-2]}[(I)[^[:WORD:]][[:WORD:]]]}))
+	fi
+	((CURSOR = i == $#LBUFFER ? 0 : i))
+else
+	if [[ $WIDGET = *end ]]; then
+		((i = ${${RBUFFER[1,-1]}[(i)[[:WORD:]][^[:WORD:]]]} - 1))
+	else
+		((i = ${${RBUFFER[1,-1]}[(i)[^[:WORD:]][[:WORD:]]]}))
+	fi
+	((CURSOR += i >= 0 ? i : $#RBUFFER))
+fi
