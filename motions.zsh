@@ -74,9 +74,21 @@ for m in vicmd visual; do
 	bindkey -M "$m" 'E'  vi-forward-shell-word-end
 	bindkey -M "$m" 'gE' vi-backward-shell-word-end
 done
-# You may also want to swap select-(in|a)-shell-word bindings
-# with select-(in|a)-blank-word bindings
+# By default, 'select-(in|a)-shell-word' is bound to 'ia' and 'aa'
+# You may want to swap this if you use the above bindings:
 bindkey -M viopp aW select-a-shell-word
 bindkey -M viopp iW select-in-shell-word
 bindkey -M viopp aa select-a-blank-word
 bindkey -M viopp ia select-in-blank-word
+
+# Add the following to your zshrc to overwrite the normal
+# (forward|backward)-word bindings:
+for m in vicmd visual; do
+	bindkey -M "$m" 'w'  vi-forward-wordchars
+	bindkey -M "$m" 'b'  vi-backward-wordchars
+	bindkey -M "$m" 'e'  vi-forward-wordchars-end
+	bindkey -M "$m" 'ge' vi-backward-wordchars-end
+done
+# TODO: these widgets haven't been written yet
+bindkey -M viopp aw select-a-wordchars
+bindkey -M viopp iw select-in-wordchars
