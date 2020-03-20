@@ -17,6 +17,7 @@ Add more Vi Motions
 | Yes | `vicmd` `viopp` `visual` | `)` `(` `g)` `g(` | move forward/back to start/end of command |
 | Yes | `vicmd` `viopp` | `as` `aS` | select a command |
 | Yes | `vicmd` `viopp` | `is` `iS` | select in a command (exclude terminating `;` and control flow words) |
+| Yes | `vicmd` `viopp` `visual` | _(Not enabled by default)_ | Move forward/back to start/end of `$WORDCHARS`-dependant words |
 | Yes | `vicmd` `viopp` `visual` | _(Not enabled by default)_ | Move forward/back to start/end of shell words |
 
 _\*("New": Plugins marked as "not new" are distributed with Zsh and are simply loaded by this plugin.
