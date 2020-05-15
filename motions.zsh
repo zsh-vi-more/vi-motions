@@ -12,10 +12,12 @@ autoload -Uz select-quoted select-bracketed split-shell-arguments surround \
 local m seq
 
 # Bind Home/End
-bindkey -M vicmd '^[[H' vi-beginning-of-line
-bindkey -M viins '^[[H' beginning-of-line
-bindkey -M vicmd '^[[F' vi-end-of-line
-bindkey -M viins '^[[F' end-of-line
+for m in vicmd viins viopp; do
+	# Map variants of Home to '^[[H', and varients of End to '^[[F'
+	bindkey -M $m -s '^[[1~' '^[[H' '^[[7~' '^[[H' '^[OH' '^[[H' \
+		'^[[2~' '^[[F' '^[[8~' '^[[F' '^[OF' '^[[F' \
+	bindkey -M $m '^[[H' vi-beginning-of-line '^[[F' vi-end-of-line
+done
 
 # Forced motion
 zle -N vi-forced-motion

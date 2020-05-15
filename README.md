@@ -7,6 +7,7 @@ Add more Vi Motions
 
 | New\* | Map | Keybinding | Motion |
 | --- | --- | --- | --- |
+| No | `vicmd` `viins` | `\e[H` `\e[F` (Home/End) | beginning/end of line |
 | No | `vicmd` `viopp` | `a'` `a"` ```a` ``` | select a quoted string or backticks |
 | No | `vicmd` `viopp` | `i'` `i"` ```i` ``` | select in a quoted string or backticks |
 | No | `vicmd` `viopp` | `a(` `a[` `a{` `a<` `ab` `a)` `a]` `a}` `a>` `aB` | select a bracketed segment |
