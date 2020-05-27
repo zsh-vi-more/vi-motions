@@ -1,0 +1,14 @@
+local key
+read -k 1 key
+if [[ $key = 's' ]]; then
+	case $WIDGET in
+		vi-change*) zle change-surround ;;
+		vi-delete*) zle delete-surround ;;
+		vi-yank*)   zle add-surround ;;
+	esac
+else
+	zle -U $key
+	zle .${WIDGET%-wrapper}
+fi
+
+# vim: syntax=zsh

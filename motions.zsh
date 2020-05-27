@@ -6,7 +6,7 @@
 fpath+=( "${0:h}/functions" )
 autoload -Uz select-quoted select-bracketed split-shell-arguments surround \
 	vi-forward-wordchars vi-forward-shell-word vi-forward-command select-a-command \
-	vi-forced-motion
+	vi-forced-motion viopp-wrapper
 # }}}
 
 local m seq
@@ -35,11 +35,15 @@ for m in vicmd viopp; do
 	done
 done
 
+zle -N vi-change-wrapper viopp-wrapper
+zle -N vi-delete-wrapper viopp-wrapper
+zle -N vi-yank-wrapper viopp-wrapper
+
 # Load Vi-surround from zsh/functions/Zle
 zle -N delete-surround surround
 zle -N add-surround surround
 zle -N change-surround surround
-bindkey -M vicmd cs change-surround ds delete-surround ys add-surround
+bindkey -M vicmd c vi-change-wrapper d vi-delete-wrapper y vi-yank-wrapper
 bindkey -M visual S add-surround
 
 # Add forward/backwards widgets
