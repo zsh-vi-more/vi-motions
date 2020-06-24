@@ -41,15 +41,17 @@ for m in vicmd viopp; do
 	done
 done
 
-zle -N vi-change-wrapper -viopp-wrapper
-zle -N vi-delete-wrapper -viopp-wrapper
-zle -N vi-yank-wrapper -viopp-wrapper
-
 # Load Vi-surround from zsh/functions/Zle
 zle -N delete-surround surround
 zle -N add-surround surround
 zle -N change-surround surround
-bindkey -M vicmd c vi-change-wrapper d vi-delete-wrapper y vi-yank-wrapper
+
+
+zle -N zvmm-vi-change -viopp-wrapper
+zle -N zvmm-vi-delete -viopp-wrapper
+zle -N zvmm-vi-yank   -viopp-wrapper
+
+bindkey -M vicmd c zvmm-vi-change d zvmm-vi-delete y zvmm-vi-yank
 bindkey -M visual S add-surround
 
 # Add forward/backwards widgets

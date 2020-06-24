@@ -1,3 +1,8 @@
+if [[ -v __zvmm_viopp_wrapper ]]; then
+	# if inside vi-delete|change|yank, it needs to read-command itself
+	zle ${WIDGET#zvmm-}
+	return
+fi
 local key
 read -k 1 key
 if [[ $key = 's' ]]; then
@@ -7,8 +12,10 @@ if [[ $key = 's' ]]; then
 		vi-yank*)   zle add-surround ;;
 	esac
 else
+	typeset -g __zvmm_viopp_wrapper
 	zle -U $key
-	zle .${WIDGET%-wrapper}
+	zle ${WIDGET#zvmm-} -w
+	unset __zvmm_viopp_wrapper
 fi
 
 # vim: syntax=zsh
