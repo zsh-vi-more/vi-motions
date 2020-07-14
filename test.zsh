@@ -37,7 +37,7 @@ for ll lm ("${(@)lefts}") {
 		BUFFER="$ll$lm$c$rm$rr"
 
 		CURSOR=$cur
-		KEYS=ac select-command
+		KEYS=ac WIDGET=select-a-command select-a-command
 		if (( aCURSOR != CURSOR || aMARK != MARK )); then
 			print -l 'In "select-command" test:' \
 				"BUFFER:$BUFFER:" \
@@ -48,7 +48,7 @@ for ll lm ("${(@)lefts}") {
 		fi
 
 		CURSOR=$cur
-		KEYS=ic select-command
+		KEYS=ic WIDGET=select-in-command select-a-command
 		if (( iCURSOR != CURSOR || iMARK != MARK )); then
 			print -l 'In "select-command" test:' \
 				"BUFFER:$BUFFER:" \
