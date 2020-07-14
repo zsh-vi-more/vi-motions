@@ -21,7 +21,7 @@ local m seq
 for m in vicmd viins viopp; do
 	# Map variants of Home to '^[[H', and varients of End to '^[[F'
 	bindkey -M $m -s '^[[1~' '^[[H' '^[[7~' '^[[H' '^[OH' '^[[H' \
-		'^[[2~' '^[[F' '^[[8~' '^[[F' '^[OF' '^[[F' \
+		'^[[2~' '^[[F' '^[[8~' '^[[F' '^[OF' '^[[F'
 	bindkey -M $m '^[[H' vi-beginning-of-line '^[[F' vi-end-of-line
 done
 
