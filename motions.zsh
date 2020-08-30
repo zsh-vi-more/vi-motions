@@ -11,7 +11,7 @@ autoload -Uz select-quoted select-bracketed split-shell-arguments surround
 # from this plugin:
 autoload -Uz - \
 	-vi-forward-wordchars -vi-forward-shell-word -vi-forward-command -select-a-command \
-	-vi-forced-motion -viopp-wrapper
+	-vi-forced-motion -viopp-wrapper -viopp-wrapper-push-string
 # }}}
 set +x
 
@@ -47,9 +47,10 @@ zle -N add-surround surround
 zle -N change-surround surround
 
 
-zle -N zvmm-vi-change -viopp-wrapper
-zle -N zvmm-vi-delete -viopp-wrapper
-zle -N zvmm-vi-yank   -viopp-wrapper
+zle -N zvmm-vi-change   -viopp-wrapper
+zle -N zvmm-vi-delete   -viopp-wrapper
+zle -N zvmm-vi-yank     -viopp-wrapper
+zle -N zvmm-push-string -viopp-wrapper-push-string
 
 bindkey -M vicmd c zvmm-vi-change d zvmm-vi-delete y zvmm-vi-yank
 bindkey -M visual S add-surround

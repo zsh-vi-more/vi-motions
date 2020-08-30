@@ -1,21 +1,36 @@
-if [[ -v __zvmm_viopp_wrapper ]]; then
-	# if inside vi-delete|change|yank, it needs to read-command itself
-	zle ${WIDGET#zvmm-}
-	return
-fi
+__p(){
+	print -l - $funcstack[2] $1 '> '${^@:2} >> ~-x/zlog
+}
 local key
 read -k 1 key
 if [[ $key = 's' ]]; then
-	case $WIDGET in
-		vi-change*) zle change-surround ;;
-		vi-delete*) zle delete-surround ;;
-		vi-yank*)   zle add-surround ;;
+	case ${WIDGET#zvmm-} in
+		vi-change*) zle change-surround -w ;;
+		vi-delete*) zle delete-surround -w ;;
+		vi-yank*)   zle add-surround -w ;;
+	esac
+elif [[ $key = $KEYS ]]; then
+	case ${WIDGET#zvmm-} in
+		vi-change*) zle vi-change-line-whole-line -w ;;
+		vi-delete*) zle delete-surround -w ;;
+		vi-yank*)   zle add-surround -w ;;
 	esac
 else
 	typeset -g __zvmm_viopp_wrapper
-	zle -U $key
-	zle ${WIDGET#zvmm-} -w
-	unset __zvmm_viopp_wrapper
+	# Ref zshzle:
+	# zle -U:
+	# - After the widget currently executed finishes(!)
+	# - ZLE will behave as if the characters of $key were typed by the user
+	# So we wrap zle -U in a widget
+	zle zvmm-push-string $key
+
+	{ # change binding for push-string call, then change back
+		bindkey -M "$KEYMAP" "$KEYS" "${WIDGET#zvmm-}"
+		zle ${WIDGET#zvmm-} -w
+	} always {
+		bindkey -M "$KEYMAP" "$KEYS" "${WIDGET}"
+	}
 fi
+
 
 # vim: syntax=zsh
