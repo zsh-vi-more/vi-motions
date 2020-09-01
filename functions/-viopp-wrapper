@@ -7,18 +7,23 @@ if [[ $key = 's' ]]; then
 		vi-yank*)   zle add-surround -w ;;
 	esac
 else
+	# man zshzle:
+	#   zle -U:
+	#   - After the widget currently executed finishes(!)
+	#   - ZLE will behave as if the characters of $key were typed by the user
 
-	# Ref zshzle:
-	# zle -U:
-	# - After the widget currently executed finishes(!)
-	# - ZLE will behave as if the characters of $key were typed by the user
 	# So by wrapping zle -U in a widget, make sure that $key is ready for us
 	# within the context of THIS widget
 	zle zvmm-push-string $key
 
 	# change binding for push-string call, then change back ASAP
+	# This is because vi-(delete|change) uses "zle read-command"
+	# and checks if it is the same as itself.
+	# Therefore, "d" needs to be mapped directly to vi-delete (for example)
 	bindkey -M "$KEYMAP" "$KEYS" "${WIDGET#zvmm-}"
-	sched +0 bindkey -M "$KEYMAP" "$KEYS" "${WIDGET}"
+	# Use sched, since the ^C inside the nested widget propagates out
+	# and would exit the function without restoring the key
+	sched +0 bindkey -M "$KEYMAP" "$KEYS" "$WIDGET"
 	zle ${WIDGET#zvmm-} -w
 fi
 
