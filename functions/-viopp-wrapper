@@ -1,6 +1,3 @@
-__p(){
-	print -l - $funcstack[2] $1 '> '${^@:2} >> ~-x/zlog
-}
 local key
 read -k 1 key
 if [[ $key = 's' ]]; then
@@ -10,12 +7,13 @@ if [[ $key = 's' ]]; then
 		vi-yank*)   zle add-surround -w ;;
 	esac
 else
-	typeset -g __zvmm_viopp_wrapper
+
 	# Ref zshzle:
 	# zle -U:
 	# - After the widget currently executed finishes(!)
 	# - ZLE will behave as if the characters of $key were typed by the user
-	# So we wrap zle -U in a widget
+	# So by wrapping zle -U in a widget, make sure that $key is ready for us
+	# within the context of THIS widget
 	zle zvmm-push-string $key
 
 	# change binding for push-string call, then change back ASAP
