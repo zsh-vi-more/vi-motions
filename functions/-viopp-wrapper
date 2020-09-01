@@ -9,12 +9,6 @@ if [[ $key = 's' ]]; then
 		vi-delete*) zle delete-surround -w ;;
 		vi-yank*)   zle add-surround -w ;;
 	esac
-elif [[ $key = $KEYS ]]; then
-	case ${WIDGET#zvmm-} in
-		vi-change*) zle vi-change-line-whole-line -w ;;
-		vi-delete*) zle delete-surround -w ;;
-		vi-yank*)   zle add-surround -w ;;
-	esac
 else
 	typeset -g __zvmm_viopp_wrapper
 	# Ref zshzle:
@@ -24,12 +18,10 @@ else
 	# So we wrap zle -U in a widget
 	zle zvmm-push-string $key
 
-	{ # change binding for push-string call, then change back
-		bindkey -M "$KEYMAP" "$KEYS" "${WIDGET#zvmm-}"
-		zle ${WIDGET#zvmm-} -w
-	} always {
-		bindkey -M "$KEYMAP" "$KEYS" "${WIDGET}"
-	}
+	# change binding for push-string call, then change back ASAP
+	bindkey -M "$KEYMAP" "$KEYS" "${WIDGET#zvmm-}"
+	sched +0 bindkey -M "$KEYMAP" "$KEYS" "${WIDGET}"
+	zle ${WIDGET#zvmm-} -w
 fi
 
 
