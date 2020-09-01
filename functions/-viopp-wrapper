@@ -20,10 +20,11 @@ else
 	# This is because vi-(delete|change) uses "zle read-command"
 	# and checks if it is the same as itself.
 	# Therefore, "d" needs to be mapped directly to vi-delete (for example)
-	bindkey -M "$KEYMAP" "$KEYS" "${WIDGET#zvmm-}"
+
 	# Use sched, since the ^C inside the nested widget propagates out
 	# and would exit the function without restoring the key
 	sched +0 bindkey -M "$KEYMAP" "$KEYS" "$WIDGET"
+	bindkey -M "$KEYMAP" "$KEYS" "${WIDGET#zvmm-}"
 	zle ${WIDGET#zvmm-} -w
 fi
 
