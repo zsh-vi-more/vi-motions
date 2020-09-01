@@ -5,7 +5,6 @@
 0="${${(M)0:#/*}:-$PWD/$0}"
 fpath+=( "${0:h}/functions" )
 
-set -x
 # from $PFX/share/zsh/$ZSH_VERSION/functions
 autoload -Uz select-quoted select-bracketed split-shell-arguments surround
 # from this plugin:
@@ -13,7 +12,6 @@ autoload -Uz - \
 	-vi-forward-wordchars -vi-forward-shell-word -vi-forward-command -select-a-command \
 	-vi-forced-motion -viopp-wrapper -viopp-wrapper-push-string
 # }}}
-set +x
 
 local m seq
 
