@@ -1,0 +1,4 @@
+local arg
+for arg; zle -U "$arg"
+
+# vim: syntax=zsh

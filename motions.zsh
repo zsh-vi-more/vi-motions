@@ -4,9 +4,13 @@
 0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 0="${${(M)0:#/*}:-$PWD/$0}"
 fpath+=( "${0:h}/functions" )
-autoload -Uz select-quoted select-bracketed split-shell-arguments surround \
-	vi-forward-wordchars vi-forward-shell-word vi-forward-command select-a-command \
-	vi-forced-motion
+
+# from $PFX/share/zsh/$ZSH_VERSION/functions
+autoload -Uz select-quoted select-bracketed split-shell-arguments surround
+# from this plugin:
+autoload -Uz - \
+	-vi-forward-wordchars -vi-forward-shell-word -vi-forward-command -select-a-command \
+	-vi-forced-motion -viopp-wrapper -viopp-wrapper-push-string
 # }}}
 
 local m seq
@@ -20,7 +24,7 @@ for m in vicmd viins viopp; do
 done
 
 # Forced motion
-zle -N vi-forced-motion
+zle -N vi-forced-motion -vi-forced-motion
 bindkey -M viopp v vi-forced-motion
 
 # More text objects from zsh/functions/Zle
@@ -39,15 +43,22 @@ done
 zle -N delete-surround surround
 zle -N add-surround surround
 zle -N change-surround surround
-bindkey -M vicmd cs change-surround ds delete-surround ys add-surround
+
+
+zle -N zvmm-vi-change   -viopp-wrapper
+zle -N zvmm-vi-delete   -viopp-wrapper
+zle -N zvmm-vi-yank     -viopp-wrapper
+zle -N zvmm-push-string -viopp-wrapper-push-string
+
+bindkey -M vicmd c zvmm-vi-change d zvmm-vi-delete y zvmm-vi-yank
 bindkey -M visual S add-surround
 
 # Add forward/backwards widgets
 for m in command shell-word wordchars; do
-	zle -N vi-forward-$m
-	zle -N vi-backward-$m     vi-forward-$m
-	zle -N vi-forward-$m-end  vi-forward-$m
-	zle -N vi-backward-$m-end vi-forward-$m
+	zle -N vi-forward-$m      -vi-forward-$m
+	zle -N vi-backward-$m     -vi-forward-$m
+	zle -N vi-forward-$m-end  -vi-forward-$m
+	zle -N vi-backward-$m-end -vi-forward-$m
 done
 
 # Forwards-backwards for commands
@@ -57,8 +68,8 @@ for m in vicmd viopp visual; do
 done
 
 # Add select-(in|a)-command
-zle -N select-a-command
-zle -N select-in-command select-a-command
+zle -N select-a-command  -select-a-command
+zle -N select-in-command -select-a-command
 for m in vicmd viopp; do
 	bindkey -M "$m" 'as' select-a-command 'aS' select-a-command \
 		'is' select-in-command 'iS' select-in-command
