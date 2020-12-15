@@ -12,6 +12,8 @@ autoload -Uz - \
 	-vi-forward-wordchars -vi-forward-shell-word -vi-forward-command -select-a-command \
 	-vi-forced-motion -viopp-wrapper -viopp-wrapper-push-string
 # }}}
+# anon function for local scope
+(){
 
 local m seq
 
@@ -105,3 +107,5 @@ done
 # TODO: these widgets haven't been written yet
 bindkey -M viopp aw select-a-wordchars
 bindkey -M viopp iw select-in-wordchars
+
+}
