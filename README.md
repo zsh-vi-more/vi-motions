@@ -1,5 +1,7 @@
 # More Vi Motions
 
+[![Gitter](https://badges.gitter.im/zsh-vi-more/community.svg)](https://gitter.im/zsh-vi-more/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 Add more Vi Motions
 
 ## Motions added:
