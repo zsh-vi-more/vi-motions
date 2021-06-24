@@ -15,7 +15,7 @@ Add more Vi Motions
 | No | `vicmd` `viopp` | `i'` `i"` ```i` ``` | select in a quoted string or backticks |
 | No | `vicmd` `viopp` | `a(` `a[` `a{` `a<` `ab` `a)` `a]` `a}` `a>` `aB` | select a bracketed segment |
 | No | `vicmd` `viopp` | `i(` `i[` `i{` `i<` `ib` `i)` `i]` `i}` `i>` `iB` | select in a bracketed segment |
-| No | `vicmd` | `cs` `ds` `ys` | change/delete/add surrounding quotes/brackets |
+| No\*\* | `vicmd` | `cs` `ds` `ys` | change/delete/add surrounding quotes/brackets |
 | No | `visual` | `S` | add surrounding quotes/brackets |
 | Yes | `viopp` | `v`[motion] | Force motion character-wise, or toggle exclusivity (see `:h forced-motion` in Vim) |
 | Yes | `vicmd` `viopp` `visual` | `)` `(` `g)` `g(` | move forward/back to start/end of command |
@@ -26,6 +26,8 @@ Add more Vi Motions
 
 _\*("New": Plugins marked as "not new" are distributed with Zsh and are simply loaded by this plugin.
 Plugins marked as "new" are written and maintained in this repo.)_
+
+_\*\*(The `cs` `ds` `ys` commands don't work well by default due to KEYTIMEOUT problems/conflicting with the `c` `d` `y` commands. I wrap `c` `d` `y` here, this lets me fix this problem.)_
 
 ## Future additions(?):
 
