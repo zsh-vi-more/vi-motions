@@ -53,6 +53,7 @@ zle -N zvmm-vi-yank     -viopp-wrapper
 zle -N zvmm-push-string -viopp-wrapper-push-string
 
 bindkey -M vicmd c zvmm-vi-change d zvmm-vi-delete y zvmm-vi-yank
+bindkey -M visual c vi-change d vi-delete y vi-yank
 bindkey -M visual S add-surround
 
 # Add forward/backwards widgets

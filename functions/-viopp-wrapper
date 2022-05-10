@@ -1,5 +1,6 @@
 local key
 read -k 1 key
+
 if [[ $key = 's' ]]; then
 	case ${WIDGET#zvmm-} in
 		vi-change*) zle change-surround -w ;;
