@@ -1,7 +1,5 @@
 local key
-if ((! REGION_ACTIVE)); then
-	read -k 1 key
-fi
+read -k 1 key
 
 if [[ $key = 's' ]]; then
 	case ${WIDGET#zvmm-} in
