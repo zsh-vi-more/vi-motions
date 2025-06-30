@@ -25,7 +25,7 @@ if [[ $WIDGET = vi-b* ]]; then
 else
 	(( offset = 2 ))
 	# if an end movement but not at end, move backward
-	(( is_end && $REPLY2 < ${#reply[1,REPLY]} )) && (( REPLY-- ))
+	(( is_end && $REPLY2 < ${(cj..)#reply[1,REPLY]} )) && (( REPLY-- ))
 fi
 
 # even elements are shell arguments
